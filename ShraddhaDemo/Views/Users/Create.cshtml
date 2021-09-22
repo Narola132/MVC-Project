@@ -1,0 +1,30 @@
+﻿@model ShraddhaDemo.Models.UsersViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+@using (Ajax.BeginForm("Create", "Users", new AjaxOptions { OnSuccess = "createuser()" }))
+{
+    @Html.Partial("_AddUser", Model);
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@*<script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
+@*<script src="~/Scripts/jquery.validate.min.js"></script>*@
+@*<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#Dateofbirth").datepicker({ dateFormat: "dd-mm-yy" });
+        $("#Joiningdate").datepicker({ dateFormat: "dd-mm-yy" });
+    });
+</script>

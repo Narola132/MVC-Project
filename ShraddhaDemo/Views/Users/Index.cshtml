@@ -1,0 +1,141 @@
+﻿@model IEnumerable<ShraddhaDemo.Models.UsersViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Users</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<p>
+    <button class="btn btn-success createUser" type="button">Create With Partial</button>
+</p>
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.firstname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.city)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.state)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dateofbirth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Joiningdate)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.city)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.state)
+                </td>
+                @if (item.Dateofbirth.HasValue)
+                {
+                    <td>
+                        @item.Dateofbirth.Value.Date.ToShortDateString()
+                    </td>
+                }
+                else
+                {
+                    <td>
+                    </td>
+                }
+                @if (item.Joiningdate.HasValue)
+                {
+                    <td>
+                        @item.Joiningdate.Value.Date.ToShortDateString()
+                    </td>
+                }
+                else
+                {
+            <td>
+                <a href="~/Controllers/UsersController.cs">~/Controllers/UsersController.cs</a>
+            </td>
+                }
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                    @*| @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+                </td>
+            </tr>
+        }
+
+    </table>
+
+}
+else
+{
+    <div class="alert alert-warning">
+        <p>No record found.</p>
+    </div>
+}
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        @using (Ajax.BeginForm("Create", "Users", new AjaxOptions { OnSuccess = "createuser()" }))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add User</h4>
+                </div>
+
+                <div class="modal-body userForm">
+                    <input type="hidden" id="ISpartial" name="ISpartial" value="true" />
+                    @Html.Partial("_AddUser", new ShraddhaDemo.Models.UsersViewModel());
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="https://rawgithub.com/trentrichardson/jQuery-Timepicker-Addon/master/jquery-ui-timepicker-addon.js"></script>
+
+<script>
+    $(document).on("click", ".createUser", function () {
+        $("#myModal").modal("show");
+    });
+    $(function () {
+        $("#Dateofbirth").datepicker({ dateFormat: "dd-mm-yy" });
+        $("#Joiningdate").datepicker({ dateFormat: "dd-mm-yy" });
+    });
+
+    var createuser = function (res) {
+        if (res != null && res == "true") {
+            $("#myModal").modal("hide");
+        }
+    }
+</script>
+

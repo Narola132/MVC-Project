@@ -1,0 +1,96 @@
+﻿@model List<ShraddhaDemo.Models.UsersViewModel>
+@{
+    Layout = null;
+    var userModel = new ShraddhaDemo.Models.UsersViewModel();
+}
+<style>
+    .showresult{
+        background-color : blue;
+        color:white;
+    }
+</style>
+@if (Model != null && Model.Any())
+{
+    var count = 1;
+    <table class="table showresult">
+        <tr>
+            <th>
+                No.
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => userModel.firstname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => userModel.lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => userModel.address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => userModel.city)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => userModel.state)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => userModel.Dateofbirth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => userModel.Joiningdate)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@count</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.city)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.state)
+                </td>
+                @if (item.Dateofbirth.HasValue)
+                {
+                    <td>
+                        @item.Dateofbirth.Value.Date.ToShortDateString()
+                    </td>
+                }
+                else
+                {
+                    <td>
+                    </td>
+                }
+                @if (item.Joiningdate.HasValue)
+                {
+                    <td>
+                        @item.Joiningdate.Value.Date.ToShortDateString()
+                    </td>
+                }
+                else
+                {
+                    <td>
+                    </td>
+                }
+            </tr>
+            count++;
+        }
+
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">
+        <p>No Results Found.</p>
+    </div>
+}
+
